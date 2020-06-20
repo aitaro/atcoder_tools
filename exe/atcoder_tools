@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "atcoder_tools"
+
+AtcoderTools::CLI.start

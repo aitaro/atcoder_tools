@@ -1,0 +1,12 @@
+require 'rspec'
+
+RSpec.describe 'test' do
+  <% @tests.each do |test| %>
+  it "test-<%= test[:no] %>" do
+    io = IO.popen("ruby <%= task_file_path %>", "w+")
+    io.puts("<%= test[:input] %>")
+    io.close_write
+    expect(io.readlines.join).to eq("<%= test[:output] %>")
+  end
+  <% end %>
+end

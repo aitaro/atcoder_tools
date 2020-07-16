@@ -1,47 +1,46 @@
 # AtcoderTools
+Atcoderの競技環境を簡単にsetupするためのツールです。現在過去問のみ対応しています。
 
-TODOTODOTODO
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/atcoder_tools`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'atcoder_tools'
+## インストール
+```bash
+$ gem install atcoder_tools
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install atcoder_tools
-
-## Usage
+## 使い方
+### コンテスト用ファイルの作成
 ```
-$ atcoder_tools abc170
+$ atcoder_tools create abc170
 ```
+
+### コンテスト用自動デバッグ
+```
+$ atcoder_tools start
+```
+
+### コンテストの提出
+```
+$ atcoder_tools submit abc170
+```
+
+### コンテストの削除
+```
+$ atcoder_tools delete abc170
+```
+
+### MODEについて
+- NONE: なにもおこらない
+- DEBUG: 標準入力で、testcaseが渡されたら状態で実行される。
+- RUN: 単純にファイルを実行。標準入力は自分で渡す。
+- TEST: rspecを用いたテスト自動実行。どれが通っていてどれが通っていないかわかる。
 
 ## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+本リポジトリをクローンし、path指定して、gemをインストールするとデバッグできる。
 
 ## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/atcoder_tools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/atcoder_tools/blob/master/CODE_OF_CONDUCT.md).
-
+issueやプルリク適当に投げてくれてかまいません。
 
 ## License
-
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
-
 Everyone interacting in the AtcoderTools project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/atcoder_tools/blob/master/CODE_OF_CONDUCT.md).

@@ -15,6 +15,10 @@ class Contest
     "https://atcoder.jp/contests/#{@name}/tasks/#{@name}_#{task_name}"
   end
 
+  def submission_url
+    "https://atcoder.jp/contests/#{@name}/submissions/me"
+  end
+
   def create!
     FileUtils.mkdir_p @name
     tasks = ['a','b','c','d','e','f'].map{|task_name| Task.new(self, task_name)}

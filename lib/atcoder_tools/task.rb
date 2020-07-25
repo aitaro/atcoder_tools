@@ -5,6 +5,8 @@ require 'erb'
 
 # module Atcoder
   class Task
+    attr_reader :contest, :name
+    # contest引数はcontestクラス
     def initialize(contest, name)
       @contest = contest
       @name = name
@@ -40,10 +42,13 @@ require 'erb'
 
     def run
       read_meta_data
+      puts("#{@contest.name}:#{@name} is running in #{@mode} MODE")
       update_spec
       if @mode == "DEBUG"
         io = IO.popen("ruby #{task_file_path}", "w+")
-        io.puts(@tests[0][:input])
+        @tests[0][:inputs].each do |input|
+          io.puts(input)
+        end
         io.close_write
         puts io.readlines
       end
@@ -80,7 +85,9 @@ require 'erb'
         end
         if line =~ /\#\sinput:/
           test = tests.find{|test| test[:no] == test_no}
-          test.merge!({ input: line.scan(/\#\sinput\:\s\"(.*)\"/)[0][0] })
+          input_str = line.scan(/\#\sinput\:\s\"(.*)\"/)[0][0]
+          inputs = input_str.chomp.split('\\n')
+          test.merge!({ inputs: inputs })
         end
         if line =~ /\#\soutput:/
           test = tests.find{|test| test[:no] == test_no}
@@ -92,6 +99,10 @@ require 'erb'
       end
       @tests = tests
       @mode = mode
+    end
+
+    def code
+      File.read(task_file_path)
     end
 
     def update_spec

@@ -31,4 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "listen"
   spec.add_dependency "rspec"
   spec.add_dependency 'nokogiri'
+  spec.add_dependency 'mechanize'
+  spec.add_dependency 'tty-prompt'
 end

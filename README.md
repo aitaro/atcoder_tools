@@ -1,5 +1,5 @@
 # AtcoderTools
-Atcoderの競技環境を簡単にsetupするためのツールです。現在過去問のみ対応しています。
+Atcoderの競技環境を簡単にsetupするためのツールです。
 
 ## インストール
 ```bash
@@ -7,6 +7,11 @@ $ gem install atcoder_tools
 ```
 
 ## 使い方
+### atcoderにログイン
+```
+$ atcoder_tools login
+```
+
 ### コンテスト用ファイルの作成
 ```
 $ atcoder_tools create abc170

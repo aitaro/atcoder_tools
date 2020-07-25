@@ -13,6 +13,7 @@ require_relative 'log'
 module AtcoderTools
   class CLI < Thor
     include Log
+    Prompt = TTY::Prompt.new
     desc 'login', 'login to atcoder'
     def login
       # 認証情報を書き込むので、gitignoreを設定する
@@ -49,18 +50,26 @@ module AtcoderTools
       settings.save!
     end
 
-    desc 'config [command]', 'configuration. 対話形式で始められます。'
-    def config(config_key=nil)
+    desc 'language [lang?]', '言語を選択できます。現在対応している言語は ruby, c++(gcc) です。'
+    def language(lang='')
+      unless ['ruby', 'c++(gcc)'].include?(lang)
+        lang = Prompt.select("choose your default language.", ['ruby', 'c++(gcc)'])
+      end
 
-      puts 'not yet'
+      settings = Settings.new
+      settings.language = lang
+      settings.save!
+
+      log_info 'Default language successfully changed!'
     end
 
-    desc 'create [contest name]', 'create contest workspace'
+    desc 'create [contest name]', 'create contest workspace. contest name は actoderのurlより取得できます。(ex. abc173)'
     def create(contest_name)
       contest = Contest.new(contest_name)
+      contest.check_validity!
       contest.create!
   
-      puts 'successfully created'
+      log_info 'successfully created'
     end
 
     desc 'start', 'start run'
@@ -73,18 +82,44 @@ module AtcoderTools
           contest = Contest.new(contest_name)
           # thor と名前空間がかぶっているため
           task = ::Task.new(contest, task_name)
+
+          # 最後に動かしたcontest, taskを記憶
+          settings = Settings.new
+          settings.current_contest = contest
+          settings.current_task = task
+          settings.save!
+
           task.run
         end
       end
-      listener.start # not blocking
+      log_info 'started actoder_tools session.'
+      listener.start
       sleep
     end
 
-    desc 'submit', 'submit'
+    desc 'submit', 'ソースコードを提出します。提出する問題は対話形式で指定できます。'
     def submit
       prompt = TTY::Prompt.new
-      contest_name = prompt.select("Choose your submit contest?", ['abc169', 'abc170', 'abc171'])
-      task_name = prompt.select("Choose your tesk?", ['a', 'b'])
+      # contest_name = prompt.select("Choose your submit contest?", Contest.list.map(&:name))
+      contest_name = Prompt.select("Choose your submit contest?") do |submit|
+        Contest.list.each_with_index do |contest, i|
+          submit.choice contest.name
+          if Settings.new.current_contest&.name == contest.name
+            submit.default i + 1
+          end
+        end
+      end
+
+      # contestによっては6種類ない可能性がある。
+      task_list = ['a', 'b', 'c', 'd', 'e', 'f']
+      task_name = prompt.select("Choose your tesk?") do |submit|
+        task_list.each_with_index do |task, i|
+          submit.choice task
+          if Settings.new.current_task&.name == task
+            submit.default i + 1
+          end
+        end
+      end
 
       contest = Contest.new(contest_name)
       # thor と名前空間がかぶっているため

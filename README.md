@@ -2,7 +2,7 @@
 [![Publish Gem](https://github.com/aitaro/atcoder_tools/workflows/Publish%20Gem/badge.svg)](https://github.com/aitaro/atcoder_tools/actions?query=workflow%3A%22Publish+Gem%22)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Gem Version](https://badge.fury.io/rb/atcoder_tools.svg)](https://badge.fury.io/rb/atcoder_tools)
-[![Code Climate](https://codeclimate.com/github/aitaro/atcoder_tools.png)](https://codeclimate.com/github/sue445/atcoder_tools)
+[![Code Climate](https://codeclimate.com/github/aitaro/atcoder_tools.png)](https://codeclimate.com/github/aitaro/atcoder_tools)
 
 Atcoderの競技環境を簡単にsetupするためのツールです。
 現在 rubyとc++に対応しています。

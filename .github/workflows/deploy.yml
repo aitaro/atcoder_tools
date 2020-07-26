@@ -24,7 +24,9 @@ jobs:
       run: mkdir ~/.gem
 
     - name: Add api key
-      run: "echo ':rubygems_api_key: ${secrets.RUBYGEMS_API_KEY}' > ~/.gem/credentials"
+      run: "echo ':rubygems_api_key: ${RUBYGEMS_API_KEY}' > ~/.gem/credentials"
+      env:
+        RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
 
     - name: test
       run: cat ~/.gem/credentials

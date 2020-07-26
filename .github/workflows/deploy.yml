@@ -9,12 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.7'
 
-      - name: Release Gem
-        if: contains(github.ref, 'refs/tags/v')
-        uses: cadwallion/publish-rubygems-action@master
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
-          RELEASE_COMMAND: rake release
+    - name: Bundle install
+      run: bundle
+
+    - name: Build Gem
+      run: rake build
+
+    - name: Add api key
+      run: "echo ':rubygems_api_key: ${secrets.RUBYGEMS_API_KEY}' > ~/.gem/credentials"
+
+    - name: Release Gem
+      run: rake release

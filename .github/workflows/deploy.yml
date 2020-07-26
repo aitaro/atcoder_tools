@@ -20,6 +20,9 @@ jobs:
     - name: Build Gem
       run: rake build
 
+    - name: mkdir gem
+      run: mkdir ~/.gem
+
     - name: Add api key
       run: "echo ':rubygems_api_key: ${secrets.RUBYGEMS_API_KEY}' > ~/.gem/credentials"
 

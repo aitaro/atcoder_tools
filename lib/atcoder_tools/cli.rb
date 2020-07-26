@@ -90,7 +90,7 @@ module AtcoderTools
       listener = Listen.to('.', ignore: /.atcoder\/.*/) do |modified, added, removed|
         if modified[0]
           contest_name ,task_name = modified[0].split('/')[-2..-1]
-          task_name = task_name[..-4] # .rbをぬく
+          task_name = task_name.scan(/(.*)\..*/)[0][0]
 
           contest = Contest.new(contest_name)
           # thor と名前空間がかぶっているため

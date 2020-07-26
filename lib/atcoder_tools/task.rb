@@ -19,7 +19,14 @@ class Task
   end
 
   def task_file_path
-    "#{@contest.name}/#{@name}.rb"
+    extension = nil
+    case @contest.language
+    when 'ruby'
+      extension = 'rb'
+    when 'c++(gcc)'
+      extension = 'cpp'
+    end
+    "#{@contest.name}/#{@name}.#{extension}"
   end
 
   def compile_file_path
@@ -82,7 +89,8 @@ class Task
   def compile
     case contest.language
     when 'c++(gcc)'
-      system("c++ #{task_file_path}")
+      p 'hoge'
+      system("c++ #{task_file_path} -o #{@contest.name}/#{@name}")
     end
   end
 

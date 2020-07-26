@@ -10,8 +10,6 @@ class Contest
 
   def initialize(name)
     @name = name
-
-
   end
 
   def check_validity!
@@ -37,7 +35,12 @@ class Contest
     tasks.map(&:create!)
     settings = Settings.new
     settings.current_contest = @name
+    settings.contest_language = self, settings.language
     settings.save!
+  end
+
+  def language
+    Settings.new.contest_language(self)
   end
 
   def self.list

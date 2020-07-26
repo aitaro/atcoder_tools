@@ -56,10 +56,23 @@ module AtcoderTools
         lang = Prompt.select("choose your default language.", ['ruby', 'c++(gcc)'])
       end
 
+      # コマンドが通っているかテスト
+      log_info "Checking path ..."
+      res = case lang
+            when 'ruby'
+              !!system('ruby -v')
+            when 'c++(gcc)'
+              !!system('c++ -v')
+            end
+
+      unless res
+        raise "Cannot find path of #{lang}. Is `$ #{lang} -v` working?"
+      end
+
       settings = Settings.new
       settings.language = lang
       settings.save!
-
+      puts
       log_info 'Default language successfully changed!'
     end
 
@@ -82,7 +95,6 @@ module AtcoderTools
           contest = Contest.new(contest_name)
           # thor と名前空間がかぶっているため
           task = ::Task.new(contest, task_name)
-
           # 最後に動かしたcontest, taskを記憶
           settings = Settings.new
           settings.current_contest = contest
@@ -127,8 +139,18 @@ module AtcoderTools
       Atcoder.submit(task)
     end
 
-    desc 'delete [contest name]', 'delete'
-    def delete(contest_name)
+    desc 'delete [contest_name?]', 'delete'
+    def delete(contest_name=nil)
+      unless contest_name
+        contest_name = Prompt.select("Choose your submit contest?") do |submit|
+          Contest.list.each_with_index do |contest, i|
+            submit.choice contest.name
+            if Settings.new.current_contest&.name == contest.name
+              submit.default i + 1
+            end
+          end
+        end
+      end
       FileUtils.rm_rf(contest_name)
       FileUtils.rm_rf(".atcoder/#{contest_name}")      
       puts 'successfully deleted'

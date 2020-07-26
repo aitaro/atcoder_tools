@@ -3,7 +3,7 @@ require 'rspec'
 RSpec.describe 'test' do
   <% @tests.each do |test| %>
   it "test-<%= test[:no] %>" do
-    io = IO.popen("ruby <%= task_file_path %>", "w+")
+    io = IO.popen("<%= command %>", "w+")
     <% test[:inputs].each do |input| %>
     io.puts("<%= input %>")
     <% end %>

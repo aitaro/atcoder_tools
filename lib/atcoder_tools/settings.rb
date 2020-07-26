@@ -1,5 +1,6 @@
 require 'yaml'
 require 'base64'
+require 'fileutils'
 
 class Settings
   Credentials = Struct.new(:username, :password)
@@ -16,16 +17,20 @@ class Settings
     @settings['current_contest'] && Contest.new(@settings['current_contest'])
   end
 
-  def current_contest=(contest)
+  def ambiguous_contest(contest)
     case contest
     when String
-      contest_name = contest
+      Contest.new(contest)
     when Contest
-      contest_name = contest.name
+      contest
     else
       raise ArgumentError, "引数は StringまたはContestです。"
     end
-    @settings['current_contest'] = contest_name
+  end
+
+  def current_contest=(contest)
+    @settings['current_contest'] = ambiguous_contest(contest).name
+
   end
 
   def current_task
@@ -52,6 +57,21 @@ class Settings
     @settings['language'] = lang
   end
 
+  def contest_language(contest)
+    if @settings[ambiguous_contest(contest).name]
+      @settings[ambiguous_contest(contest).name]['language']
+    else
+      language
+    end
+  end
+
+  # contest, languageの順に代入
+  def contest_language=(data)
+    name = ambiguous_contest(data[0]).name
+    @settings[name] ||= {}
+    @settings[name]['language'] = data[1]
+  end
+
   def password=(password)
     @settings['password'] = Base64.strict_encode64(password)
   end
@@ -67,13 +87,14 @@ class Settings
 
   def credentials
     unless @settings.key?('username') && @settings.key?('password')
-      raise Error, "先にログインしてください！"
+      raise "先にログインしてください！"
     end
     return Credentials.new(@settings['username'], Base64.decode64(@settings['password']))
   end
 
   def save!
     @settings['updated_at'] = Time.now
-    YAML.dump(@settings, File.open('.atcoder/settings.yml', 'w'))
+    FileUtils.mkdir_p '.atcoder'
+    open('.atcoder/settings.yml' , 'w') {|f| YAML.dump(@settings , f ) }
   end
 end

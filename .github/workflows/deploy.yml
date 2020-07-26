@@ -19,31 +19,36 @@ jobs:
 
     - name: Build Gem
       run: rake build
+    
+    - name: Publish gem
+      uses: dawidd6/action-publish-gem@v1
+      with:
+        api_key: ${{secrets.RUBYGEMS_API_KEY}}
 
-    - name: mkdir gem
-      run: mkdir ~/.gem
+    # - name: mkdir gem
+    #   run: mkdir ~/.gem
 
-    - name: Add api key
-      run: "echo :rubygems_api_key: $RUBYGEMS_API_KEY > ~/.gem/credentials"
-      env:
-        RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+    # - name: Add api key
+    #   run: "echo :rubygems_api_key: $RUBYGEMS_API_KEY > ~/.gem/credentials"
+    #   env:
+    #     RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
 
-    - name: test
-      run: cat ~/.gem/credentials
+    # - name: test
+    #   run: cat ~/.gem/credentials
 
-    - name: test2
-      run: git status
+    # - name: test2
+    #   run: git status
 
-    - name: test3
-      run: "echo $RUBYGEMS_API_KEY"
-      env:
-        RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+    # - name: test3
+    #   run: "echo $RUBYGEMS_API_KEY"
+    #   env:
+    #     RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
 
-    - name: set git username
-      run: git config user.name "Aitaro Chaya"
+    # - name: set git username
+    #   run: git config user.name "Aitaro Chaya"
       
-    - name: set git email
-      run: git config user.email "aitaro.chaya@gmail.com"
+    # - name: set git email
+    #   run: git config user.email "aitaro.chaya@gmail.com"
 
-    - name: Release Gem
-      run: rake release
+    # - name: Release Gem
+    #   run: rake release

@@ -46,7 +46,7 @@ jobs:
       run: git config user.email "aitaro.chaya@gmail.com"
 
     - name: checkout
-      run: git checkout -b master
+      run: git checkout master
 
     - name: Release Gem
       run: rake release

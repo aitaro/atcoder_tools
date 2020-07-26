@@ -19,11 +19,6 @@ jobs:
 
     - name: Build Gem
       run: rake build
-    
-    - name: Publish gem
-      uses: dawidd6/action-publish-gem@v1
-      with:
-        api_key: ${{secrets.RUBYGEMS_API_KEY}}
 
     - name: mkdir gem
       run: mkdir ~/.gem

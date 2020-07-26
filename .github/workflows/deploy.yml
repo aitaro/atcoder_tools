@@ -28,6 +28,9 @@ jobs:
       env:
         RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
 
+    - name: change chmod
+      run: chmod 0600 ~/.gem/credentials
+
     - name: test
       run: cat ~/.gem/credentials
 

@@ -34,6 +34,11 @@ jobs:
     - name: test2
       run: git status
 
+    - name: test3
+      run: "echo $RUBYGEMS_API_KEY"
+      env:
+        RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+
     - name: set git username
       run: git config user.name "Aitaro Chaya"
       

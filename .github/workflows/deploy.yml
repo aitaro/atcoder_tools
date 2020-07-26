@@ -34,5 +34,11 @@ jobs:
     - name: test2
       run: git status
 
+    - name: set git username
+      run: git config user.name "Aitaro Chaya"
+      
+    - name: set git email
+      run: git config user.email "aitaro.chaya@gmail.com"
+
     - name: Release Gem
       run: rake release

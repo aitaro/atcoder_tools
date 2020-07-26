@@ -26,5 +26,11 @@ jobs:
     - name: Add api key
       run: "echo ':rubygems_api_key: ${secrets.RUBYGEMS_API_KEY}' > ~/.gem/credentials"
 
+    - name: test
+      run: cat ~/.gem/credentials
+
+    - name: test2
+      run: git status
+
     - name: Release Gem
       run: rake release

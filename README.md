@@ -1,5 +1,11 @@
 # AtcoderTools
+[![Publish Gem](https://github.com/aitaro/atcoder_tools/workflows/Publish%20Gem/badge.svg)](https://github.com/aitaro/atcoder_tools/actions?query=workflow%3A%22Publish+Gem%22)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Gem Version](https://badge.fury.io/rb/atcoder_tools.svg)](https://badge.fury.io/rb/atcoder_tools)
+[![Code Climate](https://codeclimate.com/github/aitaro/atcoder_tools.png)](https://codeclimate.com/github/sue445/atcoder_tools)
+
 Atcoderの競技環境を簡単にsetupするためのツールです。
+現在 rubyとc++に対応しています。
 
 ## インストール
 ```bash
@@ -7,10 +13,16 @@ $ gem install atcoder_tools
 ```
 
 ## 使い方
+### 言語の変更
+```
+$ atcoder_tools language
+```
+
 ### atcoderにログイン
 ```
 $ atcoder_tools login
 ```
+コマンドを実行すると、user_nameとpasswordの入力画面になります。
 
 ### コンテスト用ファイルの作成
 ```
@@ -24,18 +36,18 @@ $ atcoder_tools start
 
 ### コンテストの提出
 ```
-$ atcoder_tools submit abc170
+$ atcoder_tools submit
 ```
 
 ### コンテストの削除
 ```
-$ atcoder_tools delete abc170
+$ atcoder_tools delete
 ```
 
 ### MODEについて
 - NONE: なにもおこらない
 - DEBUG: 標準入力で、testcaseが渡されたら状態で実行される。
-- RUN: 単純にファイルを実行。標準入力は自分で渡す。
+- RUN: ファイルを実行。標準入力は自分で渡す。
 - TEST: rspecを用いたテスト自動実行。どれが通っていてどれが通っていないかわかる。
 
 ## Development

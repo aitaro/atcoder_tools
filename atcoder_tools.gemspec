@@ -6,9 +6,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Aitaro Chaya"]
   spec.email         = ["aitaro.chaya@gmail.com"]
 
-  spec.summary       = %q{Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
-  spec.homepage      = "https://github.com/aitaro"
+  spec.summary       = %q{usefull toolkit for atcoder}
+  spec.description   = %q{This gem enables download test cases, test automatically and submit code.}
+  spec.homepage      = "https://github.com/aitaro/atcoder_tools"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 

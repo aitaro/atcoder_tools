@@ -29,11 +29,19 @@ class Atcoder
   # 引数はcontest, taskクラス
   def submit(task)
     response = nil
-    @agent.get(task_url(task)) do |page|
+    language_id = nil
+    case task.contest.language
+    when "ruby"
+      language_id = "4049"
+    when "c++(gcc)"
+      language_id = "4003"
+    end
+
+      @agent.get(task_url(task)) do |page|
       # 1つ目のフォームはログアウト用なので2つ目を使用   
       form = page.forms.last
-      form.field_with(name: 'data.LanguageId').value = "4049"
-      form.field_with(name: 'sourceCode').value   = task.code
+      form.field_with(name: 'data.LanguageId').value = language_id
+      form.field_with(name: 'sourceCode').value = task.code
       response = @agent.submit(form)
     end
 
